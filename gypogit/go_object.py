@@ -51,13 +51,14 @@ class GoObject(object):
         handle = getattr(self, "_handle", None)
         if handle is not None:
             self.lib.c_dispose(handle)
+        self._handle = self.INVALID_HANDLE
 
     def __repr__(self):
         general_str = super(GoObject, self).__repr__()
         ret = "%s | 0x%x>" % (general_str[:-1], self._handle)
         h = getattr(self, "Hash", None)
         if h is not None:
-            ret += " | %x" % h
+            ret += " | %s" % codecs.encode(h, "hex").decode()
         return ret
 
     def __hash__(self):
