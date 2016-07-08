@@ -25,9 +25,8 @@ class Blob(GoObject):
     def Size(self):
         return self.lib.c_Blob_Size(self.handle)
 
-    @property
     def Type(self):
-        return ObjectType.Blob
+        return ObjectType(self.lib.c_Blob_Type(self.handle))
 
     def Read(self):
         size, data = self._checked(self.lib.c_Blob_Read(self.handle), True)

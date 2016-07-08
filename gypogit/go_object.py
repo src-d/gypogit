@@ -76,9 +76,9 @@ class GoObject(object):
             assert len(unpacked) >= 2
             assert isinstance(unpacked[-2], int)
             if unpacked[-2] >= 0:
-                cls.lib.free(unpacked[-1])
                 if compressed:
                     return unpacked
+                cls.lib.free(unpacked[-1])
                 if len(unpacked) == 2:
                     return
                 if len(unpacked) == 3:

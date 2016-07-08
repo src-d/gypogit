@@ -15,8 +15,8 @@ class Tree(GoObject):
     def Entries(self):
         size = self.lib.c_Tree_get_Entries_len(self.handle)
         for i in range(size):
-            cname, mode, chsh = self.lib.c_Tree_get_Entries_item(
-                self.handle, i)
+            entry = self.lib.c_Tree_get_Entries_item(self.handle, i)
+            cname, mode, chsh = entry.r0, entry.r1, entry.r2
             name = self._string(cname)
             hsh = self._bytes(chsh, size=20)
             yield name, mode, hsh
