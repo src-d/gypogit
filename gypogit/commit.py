@@ -5,6 +5,7 @@ from .core import ObjectIter, ObjectType
 from .objects import Signature
 from .tree import Tree
 from .file import File
+from .blame import Blame
 
 
 @python_2_unicode_compatible
@@ -53,6 +54,16 @@ class Commit(GoObject):
 
     def __str__(self):
         return self.String()
+
+    def References(self, path):
+        rawrefs, size = self._checked(self.lib.c_Commit_References(
+            self.handle, self._string(path, self)))
+        refs = self.ffi.cast("uint64_t*", rawrefs)
+        return [Commit(refs[i]) for i in range(size)]
+
+    def Blame(self, path):
+        return Blame(self._checked(self.lib.c_Commit_Blame(
+            self.handle, self._string(path, self))))
 
 
 class CommitIter(GoObject):

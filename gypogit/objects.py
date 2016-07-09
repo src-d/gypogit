@@ -25,13 +25,15 @@ class Blob(GoObject):
     def Size(self):
         return self.lib.c_Blob_Size(self.handle)
 
-    @property
     def Type(self):
-        return ObjectType.Blob
+        return ObjectType(self.lib.c_Blob_Type(self.handle))
 
     def Read(self):
         size, data = self._checked(self.lib.c_Blob_Read(self.handle), True)
         return self._bytes(data, size=size)
+
+    def __len__(self):
+        return self.Size
 
 
 @python_2_unicode_compatible

@@ -88,7 +88,7 @@ class Repository(GoObject):
             self.handle, self._hash(hash))))
 
     def Tags(self):
-        return TagIter(self._checked(self.lib.c_Repository_Tags(self.handle)))
+        return TagIter(self.lib.c_Repository_Tags(self.handle))
 
     def Object(self, hash):
         return Object(self._checked(self.lib.c_Repository_Object(
